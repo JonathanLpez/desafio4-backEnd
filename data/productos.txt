@@ -1,0 +1,1 @@
+[{"id":1,"code":1,"title":"Camisa","description":"Camisa de color azul","price":450,"thumbail":"Imagen vacio","stock":500},{"id":2,"code":2,"title":"Pantalon","description":"Mezquilla","price":750,"thumbail":"Imagen vacio","stock":10}]
