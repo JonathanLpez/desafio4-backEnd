@@ -10,7 +10,7 @@ class ProductManager {
         this.id = 0;
 
         try {
-            this.products = JSON.parse(fs.readFileSync(this.path + '/' + this.fileName, 'utf-8'))
+            this.products = JSON.parse(fs.readFileSync(this.path + '/' + this.fileName))
             console.log('archivo existente')
         } catch (error) {
 
@@ -19,7 +19,7 @@ class ProductManager {
         }
     }
 
-    async addProduct(code, title, description, price, thumbail, stock = 1) {
+    async addProduct(code, title, description, price, thumbail, stock = 1 , status = true) {
 
         this.id = this.products.length + 1
 
@@ -30,14 +30,16 @@ class ProductManager {
             description,
             price,
             thumbail,
-            stock
+            stock,
+            status
         }
 
         const productFilter = this.products.find(prod => prod.code === product.code)
 
         if (!productFilter) {
             this.products.push(product);
-            await fs.writeFileSync(this.path + '/' + this.fileName, JSON.stringify(this.products))
+            const dataJson = JSON.stringify(this.products)
+            await fs.writeFileSync(this.path + '/' + this.fileName, dataJson)
             return 'Producto creado'
         } else {
             return `El producto con code ${product.code} ya existe`
@@ -86,7 +88,7 @@ class ProductManager {
 
     }
 
-    async updateById(id, code, title, desc, precio, img, stock){ 
+    async updateById(id, code, title, desc, precio, img, stock, status){ 
 
         const prod = this.products.find(prod=> prod.id === id)
         
@@ -98,6 +100,7 @@ class ProductManager {
         prod.precio = precio
         prod.thumbail = img
         prod.stock = stock
+        prod.status = status
 
         await fs.promises.writeFile(this.path+'/'+this.fileName, JSON.stringify(this.products))
             return `Producto modificado con id ${id}`
@@ -135,17 +138,17 @@ const imgPrueba3 = "Imagen vacio";
 const stockPrueba3 = 100;
 
 const path = '../data'
-const fileName = 'productos.txt'
+const fileName = 'productos.json'
+
+/*
+const prueba = new ProductManager(fileName, path);
 
 
-//const prueba = new ProductManager(fileName, path);
-
-/* 
 prueba.addProduct(codePrubea, titlePrueba, descPrueba, precioPrueba, imgPrueba, stockPrueba)
     .then(res => console.log(res))
     .catch(error => console.log(error))
-
-
+*/
+/*
 prueba.addProduct(codePrubea2, titlePrueba2, descPrueba2, precioPrueba2, imgPrueba2, stockPrueba2)
     .then(res => console.log(res))
     .catch(error => console.log(error))
@@ -153,8 +156,7 @@ prueba.addProduct(codePrubea2, titlePrueba2, descPrueba2, precioPrueba2, imgPrue
 prueba.addProduct(codePrubea3, titlePrueba3, descPrueba3, precioPrueba3, imgPrueba3, stockPrueba3)
     .then(res => console.log(res))
     .catch(error => console.log(error))
-    */
-
+*/
 //console.log( prueba.getProducts())
 
 //console.log(prueba.getProductById(0))
