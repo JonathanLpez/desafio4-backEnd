@@ -7,7 +7,7 @@ const router = Router();
 const path = '../data'
 const fileName = 'productos.json'
 
-const ProductManager = require('../src/productManager.js')
+const ProductManager = require('../class/productManager.js')
 const prodManager = new ProductManager(fileName, path)
 
 // Solicitar todos los productos
@@ -83,6 +83,26 @@ router.post('/', async (req, res) => {
 
 })
 
+// Actualizar producto
+
+router.put('/:pid', async(req, res)=>{
+
+    const pid = Number(req.params.id)
+    console.log(pid)
+    const {code,title,description,price,thumbail,stock,status} = req.body
+
+    try {
+        await prodManager.updateById(pid, code, title, description, price,thumbail,stock,status)
+        res.status(201).json({message: `producto con id ${pid} modificado`})
+    } catch (error) {
+        res.status(500).json({
+            error: "error"
+        })
+    }
+
+
+})
+
 // Eliminar producto por id
 
 router.delete('/:id', async (req, res) => {
@@ -90,7 +110,7 @@ router.delete('/:id', async (req, res) => {
 
     try {
         const prodFilter = await prodManager.deteleById(id)
-        res.status(204).json(prodFilter)
+        res.status(204).json(`El producto con id ${id} fue borrado`)
     } catch (error) {
         res.status(500).json({
             error: "error"

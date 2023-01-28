@@ -17,6 +17,7 @@ class ProductManager {
             fs.writeFileSync(this.path + '/' + this.fileName, JSON.stringify([]));
             console.log('Datos creados')
         }
+
     }
 
     async addProduct(code, title, description, price, thumbail, stock = 1 , status = true) {
@@ -78,7 +79,6 @@ class ProductManager {
         try {
             const filter = this.products.filter(prod => prod.id !== id)
             this.products = filter
-            console.log(this.products)
             await fs.promises.writeFile(this.path + '/' + this.fileName, JSON.stringify(this.products))
             return `Producto borrado con id ${id}`
         } catch (error) {
@@ -88,10 +88,11 @@ class ProductManager {
 
     }
 
-    async updateById(id, code, title, desc, precio, img, stock, status){ 
+    async updateById(pid, code, title, desc, precio, img, stock, status){ 
 
-        const prod = this.products.find(prod=> prod.id === id)
-        
+        const prod = this.products.find(prod=> prod.id === pid)
+        console.log(prod)
+
         try {
 
         prod.code = code
@@ -114,56 +115,5 @@ class ProductManager {
 
 }
 
-
-const codePrubea = 1;
-const titlePrueba = "Camisa";
-const descPrueba = "Camisa de color azul";
-const precioPrueba = 450;
-const imgPrueba = "Imagen vacio";
-const stockPrueba = 500;
-
-
-const codePrubea2 = 2;
-const titlePrueba2 = "Pantalon";
-const descPrueba2 = "Mezquilla";
-const precioPrueba2 = 750;
-const imgPrueba2 = "Imagen vacio";
-const stockPrueba2 = 10;
-
-const codePrubea3 = 3;
-const titlePrueba3 = "Gorra";
-const descPrueba3 = "Color negra";
-const precioPrueba3 = 250;
-const imgPrueba3 = "Imagen vacio";
-const stockPrueba3 = 100;
-
-const path = '../data'
-const fileName = 'productos.json'
-
-/*
-const prueba = new ProductManager(fileName, path);
-
-
-prueba.addProduct(codePrubea, titlePrueba, descPrueba, precioPrueba, imgPrueba, stockPrueba)
-    .then(res => console.log(res))
-    .catch(error => console.log(error))
-*/
-/*
-prueba.addProduct(codePrubea2, titlePrueba2, descPrueba2, precioPrueba2, imgPrueba2, stockPrueba2)
-    .then(res => console.log(res))
-    .catch(error => console.log(error))
-
-prueba.addProduct(codePrubea3, titlePrueba3, descPrueba3, precioPrueba3, imgPrueba3, stockPrueba3)
-    .then(res => console.log(res))
-    .catch(error => console.log(error))
-*/
-//console.log( prueba.getProducts())
-
-//console.log(prueba.getProductById(0))
-//console.log(prueba.getProductById(4))
-/*
-prueba.deteleById(3)
-    .then( res => console.log(res))
-    .catch(error => console.log(error)) */
 
 module.exports = ProductManager;
