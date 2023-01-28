@@ -109,7 +109,7 @@ router.delete('/:id', async (req, res) => {
     const id = Number(req.params.id)
 
     try {
-        const prodFilter = await prodManager.deteleById(id)
+        await prodManager.deteleById(id)
         res.status(204).json(`El producto con id ${id} fue borrado`)
     } catch (error) {
         res.status(500).json({

@@ -1,7 +1,7 @@
 const express = require('express')
-
 const router = require('./routes/index.js')
 const morgan = require('morgan')
+
 port = 8080
 
 const app = express()
