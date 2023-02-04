@@ -41,7 +41,7 @@ class ProductManager {
             this.products.push(product);
             const dataJson = JSON.stringify(this.products)
             await fs.writeFileSync(this.path + '/' + this.fileName, dataJson)
-            return 'Producto creado'
+            return `Product created with id ${product.id}`
         } else {
             return `El producto con code ${product.code} ya existe`
         }
@@ -94,17 +94,16 @@ class ProductManager {
         console.log(prod)
 
         try {
-
         prod.code = code
         prod.title = title
-        prod.desc = desc
-        prod.precio = precio
+        prod.description = desc
+        prod.price = precio
         prod.thumbail = img
         prod.stock = stock
         prod.status = status
 
         await fs.promises.writeFile(this.path+'/'+this.fileName, JSON.stringify(this.products))
-            return `Producto modificado con id ${id}`
+            return `Producto modificado con id ${prod.id}`
         } catch (error) {
             return 'Error al modificar producto'
         }

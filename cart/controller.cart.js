@@ -11,10 +11,8 @@ const cartManager = new CartManager(path, fileName)
 
 // Agregar carrito nuevo
 router.post('/', async (req, res) => {
-    await cartManager.newCart()
-    res.status(201).json({
-        message: "New cart add"
-    })
+    const cart = await cartManager.newCart()
+    res.status(201).json(cart)
 })
 
 router.get('/:cid', async (req, res) => {

@@ -33,7 +33,7 @@ class CartManager {
 
         try {
             await fs.writeFileSync(this.path + '/' + this.fileName, JSON.stringify(this.carts))
-            return "New cart add"
+            return `New cart add with id ${cart.id}`
         } catch (error) {
             return "Error"
         }

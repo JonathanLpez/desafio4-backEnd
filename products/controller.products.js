@@ -70,10 +70,8 @@ router.post('/', async (req, res) => {
     } else {
 
         try {
-            await prodManager.addProduct(code, title, description, price, thumbail, stock, status)
-            res.status(201).json({
-                message: "Producto creado"
-            })
+            const prodAdd = await prodManager.addProduct(code, title, description, price, thumbail, stock, status)
+            res.status(201).json(prodAdd)
         } catch (error) {
             res.status(500).json({
                 error: "error"
@@ -87,7 +85,7 @@ router.post('/', async (req, res) => {
 
 router.put('/:pid', async(req, res)=>{
 
-    const pid = Number(req.params.id)
+    const pid =req.params.id
     console.log(pid)
     const {code,title,description,price,thumbail,stock,status} = req.body
 
